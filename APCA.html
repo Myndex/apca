@@ -1,0 +1,2206 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X4PP32VB3P"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-X4PP32VB3P');
+</script>
+
+<!-- ALL PAGES ON THIS SITE ARE COPYRIGHT © 1997-2022 by ANDREW SOMERS, ALL RIGHTS RESERVED - The content on THIS page is PROPRIETARY AND NOT LICENSED FOR FURTHER USE. 
+
+REASON: While much of this is indeed destined for open source, as it is in development, and being developed for certain international standards, it is important to be able to recal any old or obsolete code.
+
+THAT SAID, if you are interested in working with this code in the present state, we are open to that, please contact Andrew Somers at the GitHub repo
+-->
+
+<meta charset="utf-8"/>
+
+<title>APCA Contrast Calculator</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://apcacontrast.com/"/>
+
+<meta name="Description" content="The APCA Accessible Perceptual Contrast Algorithim SIMPLE VERSION.">
+<meta name="Keywords" content="Myndex, Research and Development, RnD, R&amp;D, Engineer, Engineering, Systems Engineer, Industrial Design, Solidworks, FEA, CADCAM, drafting, 3D modeling, prototyping, software development, database development, IT">
+
+<meta property="fb:app_id" content="227594707878157"/>
+
+<meta property="og:title" content="APCA Contrast Calculator"/>
+<meta property="og:description" content="The APCA Accessible Perceptual Contrast Algorithim BASIC VERSION."/>
+
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://apcacontrast.com/"/>
+<meta property="og:site_name" content="APCA Contrast Calculator"/>
+
+ <meta name="twitter:image" content="/images/APCAcolor4SQUARE.png">
+ 
+<meta property="og:image" content="/images/APCAcolor4SQUARE.png"/>
+<meta property="og:image:alt" content="APCA The Revolution Will Be Readable"/>
+<meta property="og:image:type" content="image/png"/>
+<meta property="og:image:width" content="872"/>
+<meta property="og:image:height" content="725"/>
+
+<link rel="apple-touch-icon" sizes="60x60" href="https://apcacontrast.com/images/favicons2020/apple-touch-icon-60x60.png?ver=fav20">
+<link rel="apple-touch-icon" sizes="76x76" href="https://apcacontrast.com/images/favicons2020/apple-touch-icon-76x76.png?ver=fav20">
+<link rel="apple-touch-icon" sizes="120x120" href="https://apcacontrast.com/images/favicons2020/apple-touch-icon-120x120.png?ver=fav20">
+<link rel="apple-touch-icon" sizes="152x152" href="https://apcacontrast.com/images/favicons2020/apple-touch-icon-152x152.png?ver=fav20">
+<link rel="apple-touch-icon" sizes="180x180" href="https://apcacontrast.com/images/favicons2020/apple-touch-icon-180x180.png?ver=fav20">
+<link rel="icon" type="image/png" sizes="32x32" href="https://apcacontrast.com/images/favicons2020/favicon-32x32.png?ver=fav20">
+<link rel="icon" type="image/png" sizes="16x16" href="https://apcacontrast.com/images/favicons2020/favicon-16x16.png?ver=fav20">
+<link rel="manifest" href="https://apcacontrast.com/images/favicons2020/site.webmanifest?ver=fav20">
+<link rel="mask-icon" href="https://apcacontrast.com/images/favicons2020/safari-pinned-tab.svg?ver=fav20" color="#3300aa">
+<link rel="shortcut icon" href="https://apcacontrast.com/images/favicons2020/favicon.ico?ver=fav20">
+<meta name="msapplication-TileColor" content="#3300aa">
+<meta name="msapplication-config" content="/images/favicons2020/browserconfig.xml?ver=fav20">
+<meta name="theme-color" content="#3300aa">
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&amp;family=Oxanium:wght@600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=K2D:wght@200;300;400;500;600;700&amp;text=N%7C&amp;display=swap" rel="stylesheet">
+
+<style>
+</style>
+
+<link rel="stylesheet" href="/CSS/style.0.1.4-g.css"/>  
+<link rel="stylesheet" href="/CSS/gamma_targets.css"/>  
+
+<!-- This Page Requires beta 0.1.3-G or greater of the following file. 
+<script src="JS/DEV.0.1.3.G_SAPC.js"></script>   
+<script type="module">
+ import { colorParsley, colorToHex, colorToRGB } from './JS/colorparsley.js';
+
+ import { APCAcontrast, reverseAPCA, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA, fontLookupAPCA } from './JS/apca-w3.js';
+</script>
+-->
+
+
+<script src="/JS/colorparsley.js"></script>
+
+<script src="/JS/apca-w3.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
+<script async>
+  // User Agent Detection — place first in head
+  // Set body tag: <body id="bodyid" onload="setBrowser()">
+
+let browserName = "";
+function setBrowser() {
+  if(navigator.vendor.match(/google/i)) {
+    browserName = 'chrome/blink';
+    document.getElementById("bodyid").classList.add("chrome");
+  } else if(navigator.vendor.match(/apple/i)) {
+    browserName = 'safari/webkit';
+    document.getElementById("bodyid").classList.add("safari");
+  } else if(navigator.userAgent.match(/firefox\//i)) {
+    browserName = 'firefox/gecko';
+    document.getElementById("bodyid").classList.add("firefox");
+  } else if(navigator.userAgent.match(/edge?\//i)) {
+    browserName = 'edge/edgehtml';
+    document.getElementById("bodyid").classList.add("edge");
+  } else if(navigator.userAgent.match(/trident\//i)) {
+    browserName = 'ie/trident';
+    document.getElementById("bodyid").classList.add("IErecent");
+  } else if(navigator.userAgent.match(/MSIE\//i)) {
+    browserName = 'ie/IE';
+    document.getElementById("bodyid").classList.add("IElegacy");
+  } else {
+    browserName = navigator.userAgent + " by " + navigator.vendor;
+    document.getElementById("bodyid").classList.add("unknownAgent");
+  }
+//console.log(document.getElementById("bodyid").classList);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//////////// PAGE CODE BETA 0.98g //////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////
+//////////// PAGE MAIN FUNCTIONS ///////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+// To do: work on reducing the use of globals!
+
+// Declare the two global variables
+var BG = colorParsley('bad');
+var TXT = colorParsley('bad8');
+var TXTblend = colorParsley('bad');
+
+
+function getCSScolor(sRGBstrg, type) {
+      // Call to primary color pre-process
+     // Returns RGBcolor OBJECT if good
+    // Sets page colors
+
+  let thisColor = colorParsley(sRGBstrg);
+
+  if (thisColor[4]) {
+
+  let colorValid = '<code><span class="dib ls0 m0 pb08 fs075 lh10 fwb">'
+                   + '#' + colorToHex(thisColor) + ' • ' + colorToRGB(thisColor)
+                 + '</span></code>';
+
+
+    switch (type) {
+
+    case 'BG':
+
+      BG = thisColor;
+
+        // Clear Error warning colors
+        inputBG.style.backgroundColor = '#DFA';
+
+        // Set the input element and result element values to match 
+        inputBG.value = sRGBstrg.replace(/[^\w,.#%()\/ -]/g,'');
+
+        sliderPicker.color.hexString =
+        BGpicker.value = '#' + colorToHex(thisColor,false);
+
+        // Set the CSS BG colors
+        BGpicker.style.backgroundColor = 
+        ampSamp3.style.backgroundColor = cssVar('--bgColor',BGpicker.value);
+
+
+      break;
+
+    case 'TXT':
+
+      TXT = thisColor;
+      TXTblend = (thisColor[3] !== '' && thisColor[3] < 1.0) ?
+                        alphaBlend(TXT,BG) : thisColor ;
+      let thisColorNoAlpha = [...thisColor];
+          thisColorNoAlpha[3] = 1;
+          
+      //  Clear Error warning colors
+        inputTXT.style.backgroundColor = '#DFA';
+
+      // Set the input element and result element values to match
+        inputTXT.value = sRGBstrg.replace(/[^\w,.#%()\/ -]/g,'');
+
+        TXTpicker.style.color =
+        TXTpicker.value = '#' + colorToHex(thisColorNoAlpha,false);
+
+        sliderPickerTXT.color.rgbaString = colorToRGB(thisColor);
+
+      // Set the CSS text colors // Background for result: it is the patch
+        TXTpicker.style.backgroundColor =
+        ampSamp3.style.borderColor =
+        ampSamp3.style.color = cssVar('--textColor', colorToRGB(thisColor)); 
+
+        colorValid = '<code><span class="dib ls0 m0 pb08 fs075 lh10 fwb">'
+                   + '#' + colorToHex(TXTblend) + ' • ' + colorToRGB(TXTblend)
+                   + '</span></code>';
+      break;
+    }
+
+    document.getElementById( type + 'validText' ).innerHTML = colorValid;
+
+  } else {  // else when the color is an invalid entry.
+
+    document.getElementById( type + 'validText' ).innerHTML =
+      '<code><span class="dib ls0 m0 pb08 fs075 lh10 fwb cR"><b>INVALID COLOR</b></span></code>';
+
+      switch (type) { // Set error warning colors
+      case 'BG':
+        inputBG.style.backgroundColor = '#F9A';
+        ampSamp3.style.backgroundColor = '#d00';
+        //BGpickerWrap.style.backgroundColor = '#D00';
+        BG[4] = false;
+      break;
+
+      case 'TXT':
+        inputTXT.style.backgroundColor = '#F9A';
+        ampSamp3.style.borderColor = '#d00';
+        ampSamp3.style.color = '#0000';
+        //TXTpickerWrap.style.backgroundColor = '#D00';
+        TXT[4] = false;
+      break;
+      }
+  }
+    return
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+/////////  MYNDEX FRAMEWORK FUNCTIONS  /////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+const cssVar = ( name, value ) => {
+  if(name.substr(0, 2) !== "--") {name = "--" + name; }
+  if(value) { document.documentElement.style.setProperty(name, value) }
+  return getComputedStyle(document.documentElement).getPropertyValue(name);
+}
+
+const byID = ( name, property, value, property2 ) => {
+
+    let tempObj = document.getElementById(name);
+    if(property) {
+      tempObj = tempObj[property]; 
+      if(property2) {tempObj = tempObj[property];}      
+      if(value != null) {tempObj = value;}
+    }
+    return tempObj;         
+}
+  // Usage for byID()
+  // byID('thing'); // returns DOM thing
+  // byID('thing','innerHTML'); // returns thing's innerHTML
+  // byID('thing','style',null,'color');    // returns thing's color
+  // byID('thing','style','#777','color'); // sets thing's color to #777
+  // byID('thing','style','color: #777'); // replaces thing's style string
+
+
+const byQuery = ( selectors, styleProperty, value) => {
+
+    let tempAry = document.querySelectorAll(selectors).style;
+
+    if(value != null && styleProperty != null) {
+      tempAry.forEach((elementStyle) => {
+        elementStyle[property] = value;   
+      })
+    } else if(value != null) {
+      tempAry.forEach((elementStyle) => {
+        elementStyle = value;   
+      })
+    }
+
+    return tempAry;         
+}
+  // Usage for byQuery()
+  // byQuery('p.thing'); // returns array of "p.thing" elements
+  // byQuery('p.thing','color','#777'); // sets all p.things color to #777
+  // byQuery('p.thing',null,'color: #777'); // replaces p.thing's style string  
+
+
+const byClass = ( className, property, value, property2 ) => {
+
+    let theClasses = document.getElementsByClassName(className);
+
+    if(value != null) {
+      theClasses.forEach((thisClass) => { 
+        if(property2) {
+          thisClass[property][property2] = value;
+        } else {
+          thisClass[property] = value;    
+        }
+    })
+
+    return  theClasses;     
+  }
+}
+  // Usage for byClass()
+  // byClass('thing'); // returns array of thing classes    
+  // byClass('thing','innerHTML'); // set all thing classes innerHTML to empty
+  // byClass('thing','innerHTML','Hollow World');
+        // sets all thing classes innerHTML to "Hollow World"
+
+  // byClass('thing','style','#777','color');
+        // sets all thing classes color to #777
+
+  // byClass('thing','style','color: #777'); 
+        // Replaces all thing classes style string with 'color: #777'
+
+
+////////////////////////////////////////////////////////////////////////////////
+/////////  PAGE UTILITY FUNCTIONS  /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+  function swapColors() {
+    
+    let BGtemp = inputBG.value;
+    
+    getCSScolor(colorToHex(TXTblend),'BG');
+    getCSScolor(BGtemp, 'TXT');
+
+    testContrast();
+  }
+
+
+  // getColorURL is the main page initializer
+
+  function getColorURL() {
+
+    let urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('BG') && urlParams.has('TXT')) {
+      getCSScolor(urlParams.get('BG'),'BG');
+      getCSScolor(urlParams.get('TXT'), 'TXT');
+
+      document.getElementById("URLresult").value = document.URL; 
+      document.getElementById("URLresult").select();
+
+    } else {
+
+      getCSScolor('e9e4d0','BG'); // Default BG Color 
+      getCSScolor('1234b0', 'TXT'); // Default TXT Color
+
+    } 
+    testContrast();
+  }
+
+
+  function createColorURL (elementID,BGstring,TXTstring) {
+
+    if (BGstring && TXTstring) {
+      BG = colorParsley(BGstring);
+      TXT = colorParsley(TXTstring);
+    }
+
+    if (BG[4] && TXT[4]) {  
+      let newURL = document.getElementById(elementID).href =
+        "https://apcacontrast.com" + window.location.pathname
+        + "?BG=" + colorToHex(BG)
+        + "&TXT=" + colorToHex(TXT)
+        + "&DEV=G4g"
+        + "&BUF=A22";
+      navigator.clipboard.writeText(newURL);
+    } else {
+      document.getElementById('colorWarn').style.display='block'
+    }
+  }
+
+
+    // Entry Key Cleanup for better UX with auto-enter
+    // Only the specified key presses sends a testContrast()
+
+  function entryKeys(colorString,type,e) {
+  
+    if (
+        ( (e.which >= 48 && e.which <= 57 && event.shiftKey == false) || // 0-9
+          (e.which >= 65 && e.which <= 90) ||  // a-z
+          (e.which >= 96 && e.which <= 105) // num keypad
+        ) ||
+        e.which === 13  || // enter
+        e.which === 9   || // tab key
+        e.which === 188 || // comma key
+        e.which === 194 || // comma num keypad key
+        //e.which === 8  || // backspace
+        //e.which === 17 || // ctrl
+        //e.which === 46 || // delete
+        //(e.which >= 91 && e.which <= 93) ||  // OS key
+        (e.which === 48 && event.shiftKey == true) // ")" parenthesis key
+      ) 
+    {
+      getCSScolor(colorString,type);
+      testContrast();
+    }
+  }
+
+
+  function entryKeysNum(value,e) {
+    if ( /^-?\d\d?\d?$/.test(value) && // constrain input 
+      (
+        (e.which >= 48 && e.which <= 57 && event.shiftKey == false) ||
+        (e.which >= 96 && e.which <= 105) || // num keypad
+       
+        e.which === 13  || // enter
+        e.which === 9   || // tab key
+        e.which === 109 || // subtract
+        e.which === 173 || // minus
+        e.which === 189    // minus some user agents
+      ) 
+       )
+    {
+      setResearchOffset(value); // SAPC researchMode
+    }
+  }
+  
+  
+////////////////////////////////////////////////////////////////////////////////
+/////////  END HEAD FUNCTIONS  •••  SEE AFTER FOOTER FOR MORE  /////////////////
+////////////////////////////////////////////////////////////////////////////////
+</script>
+
+
+</head>
+
+
+<!--  ********  ******** Begin Body ********  ********  -->
+<!--  ********  ******** Begin Body ********  ********  -->
+<!--  ********  ******** Begin Body ********  ********  -->
+
+
+<!--  ********  ******** Begin Body ********  ********  -->
+<!--  ********  ******** Begin Body ********  ********  -->
+<!--  ********  ******** Begin Body ********  ********  -->
+
+
+<!--  ********  ******** Begin Body ********  ********  -->
+<!--  ********  ******** Begin Body ********  ********  -->
+<!--  ********  ******** Begin Body ********  ********  -->
+
+
+<!--  ********  ******** Begin Body ********  ********  -->
+<!--  ********  ******** Begin Body ********  ********  -->
+<!--  ********  ******** Begin Body ********  ********  -->
+
+
+<!--  ********  ******** Begin Body ********  ********  -->
+<!--  ********  ******** Begin Body ********  ********  -->
+<!--  ********  ******** Begin Body ********  ********  -->
+
+
+<body id="bodyid" onload="setBrowser(); getColorURL();">
+
+<main class="wrapper">
+
+  <div class="headBanner">  
+    <div class="por perceptex flr z100">
+    <a href="https://apcacontrast.com/"><img width="220" src="/images/MYNDEX_RESEARCH_outline.svg"></a>
+    </div>
+    <h1 class="" style="font-family: Audiowide;">APC<span class="flipH">A</span>  C<span class="" style="font-family: Oxanium;">ontrast Calculator</span></h1>
+  </div>
+
+  <div id="table01" class="contrastChart">
+    <table id="tableSamples" class="conformScore">
+  <tr>  
+    <th colspan="4" class="tableTitle"><label for="inputTXT">TEXT / ICON COLOR</label></th>
+
+    <th class="ma0" id="ampSamp3" colspan="2" rowspan="2" role="button" tabindex="0" onkeypress="if(event.keyCode==32||event.keyCode==13){swapColors()};" onclick="swapColors()"><span class="montFont lh05">SAMPLE<br></span><span style="display: inline-block; position:relative; padding:0; margin:21px 0 2px; font-size: 3.75em;">&amp;</span><br>&#8678;&nbsp;<span class="helvetiFont" style="line-height: 1.3;">Click To Swap</span>&nbsp;&#8680;
+    </th>
+
+    <th colspan="4" class="tableTitle"><label for="inputBG">BACKGROUND COLOR</label></th>
+  </tr>
+
+
+  <tr>
+    <th colspan="1" rowspan="1" class="colorPickerNon" id="TXTpickerWrap">
+      <input type="color" id="TXTpicker" oninput="getCSScolor(this.value,'TXT'); inputTXT.value = this.value; testContrast();"><label for="TXTpicker">Click</label>
+    </th>
+    <th colspan="3" class="tableTitle">
+      <span class="code" id="TXTvalidText"></span>
+      <br>
+      <span class="TXTinput">
+        <input id="inputTXT" type="text" value="" onclick="this.select();" onkeyup="entryKeys(this.value,'TXT',event);" onblur="getCSScolor(this.value,'TXT'); testContrast();">
+      </span>
+    </th>
+
+
+    <th colspan="3" class="tableTitle">
+      <span class="code" id="BGvalidText"></span>
+      <br>
+      <span class="TXTinput">
+        <input id="inputBG" type="text" value="" onclick="this.select();" onkeyup="entryKeys(this.value,'BG',event);" onblur="getCSScolor(this.value,'BG'); testContrast();">
+      </span>
+    </th>
+    <th rowspan="1" class="colorPickerNon" id="BGpickerWrap">
+      <input type="color" id="BGpicker" oninput="getCSScolor(this.value,'BG'); inputBG.value = this.value; testContrast();"><label for="BGpicker">Click</label>
+    </th>
+  </tr>
+
+
+  <tr id="">
+    <th colspan="4" rowspan="1" class="colorSliders">
+      <div id="TXTsliders" style="margin:5px;"></div>
+    </th>
+
+
+    <th colspan="2" rowspan="1" class="tableContrast"><span style="font-size: 1em; letter-spacing: 0;">CONTRAST<br></span><span style="font-family: 'Barlow',sans-serif; font-size: 1.35em;font-weight: 600; line-height: 1.1;" id="contrastResultTable"></span>
+    </th>
+
+
+    <th colspan="4" rowspan="1" class="colorSliders">
+      <div id="BGsliders" style="margin:5px;"></div>
+    </th>
+  </tr>
+
+
+
+  <tr>
+    <td colspan="10" class="por" style="top:18px; color:#30a; vertical-align:bottom;">
+      All font sizes are in CSS px • Reference font shown with colors at actual size &amp; weight</p>
+    </td>
+  </tr>
+
+
+  <tr class="weightHeader">
+    <th class="scoreHeader">USAGE</th>
+    <th id="weight2" class="weight weight2">200</th>
+    <th colspan="2" id="weight3" class="weight weight3">300
+      <div class="weightWord">Light</div></th>
+    <th colspan="2" id="weight4" class="weight weight4">400
+      <div class="weightWord">Normal</div></th>
+    <th id="weight5" class="weight weight5">500</th>
+    <th id="weight6" class="weight weight6">600</th>
+    <th colspan="2" id="weight7" class="weight weight7">700
+      <div class="weightWord ">Bold</div></th>
+  </tr>
+
+  <tr id="bodyText">
+  </tr>
+
+    </table>    
+  </div> <!-- Close Main Interface -->
+
+  <div class="flr" id="demoArea">
+    <h2 id="accessible-contrast">
+      <label class="tac por" for="URLresult">Create a shareable URL of these colors</label></h2>
+    <div class="centered ">
+      <input class="tac por p05" type="text" id="URLresult" value="" onclick="this.select();"/>
+    </div>
+    <a id="colorURL" class="myndexButton tac por" role="button" tabindex="0" onkeypress="if(event.keyCode==32||event.keyCode==13){createColorURL('colorURL')};" style="width: 95%; margin: 0.5em auto; padding: 0.15em 0.5em 0.35em;" onclick="createColorURL('colorURL')">Generate a URL of This Color Pair
+    </a>
+  </div><!-- Close demoArea ******** -->
+
+  <div class="innerwrapper infobox" style="min-width:420px; max-width:540px;">
+      <h2 id="accessible-contrast" class="">Accessible Contrast</h2>
+      <h3 id="font-size-and-weight" class="">Relative to Font Size and Weight</h3>
+
+      <p>APCA reports lightness contrast as an Lc&nbsp;value from <strong>Lc&nbsp;0</strong> to <strong>Lc&nbsp;106</strong> for dark text on a light background, and Lc&nbsp;0 to Lc&nbsp;-108 for light text on a dark background (dark mode). The minus sign merely indicates negative contrast, which means light text on a dark background.</p>
+      <h3 class="tal lh11">For resources, articles, and documentation, <br>please <a href="https://git.myndex.com/">visit our page at GitHub.</a></h3>
+  </div><!--   Close infobox  -->
+
+
+  <div id="colorWarn" class="clrf" style="">
+    <div style="">
+      <button class="colorWarnX" style="" onclick="document.getElementById('colorWarn').style.display='none'" tabindex="0">&times;</button>
+      <h3 style="">Please Enter Valid Colors First!</h3>
+    </div>
+  </div><!--  Close color warn   -->
+  <script>
+    let dialog = document.getElementById("colorWarn");
+    window.onclick = function(event) {
+      if (event.target == dialog) {
+        dialog.style.display = "none";
+      }
+    };
+  </script>
+
+
+  <section class="clrf clb ma10" style="max-width: 800px;">
+  <hr>
+    <h2><em>QUICK START</em> for using this tool.</h2>
+    <p><strong>INPUT BOXES:</strong> You can enter a <a href="https://drafts.csswg.org/css-color-4/#named-colors">CSS color name</a> or a 3 to 6 character hex value with or without a #, or as rgb() using numbers or percentages, with or without the 'rgb' and parenthesis. There is also a <b>special shortcut for grey:</b> enter only 1-3 rgb digits followed by a comma or percent symbol, or two hex digits (no comma) and they will be expanded. for instance, #fa becomes #fafafa.</p>
+    <p class="" style="">
+    <p><strong>POLARITY:</strong> The APCA is polarity aware, this means that it recognizes the difference of dark text on a light background vs light text on a dark background. Therefore it is important to enter the text/icon color or background color in the correct input.</p>
+    <p><strong>SWAP COLORS:</strong> You can easily swap the text and background color by clicking the big ampersand (&amp;) in the middle.</p>
+    <p><strong>ALPHA:</strong> The text color can have an alpha, which will be blended with the background before calculating contrast. NOTE: if you swap the text and background colors, the text color will be blended and the alpha set to 1 before swapping to the background. The hex and rgb() displayed over the input box always shows the final blended color.</p>
+    <p><strong>URL:</strong> You can create a URL of the colors to share. Any alpha is blended before creating the URL.</p>
+    <strong>COLOR SLIDERS: </strong>These are presently using HSL, which is not perceptually uniform. We are working on incorporating perceptually uniform sliders soon.</p>
+    <strong>BROWSER PICKER: </strong>The browser's default picker is available by clicking on the example color square next to the input boxes.</p>
+  </section> <!--  Close quickstart  -->
+
+
+  <div class="explainers clrf">
+
+    <section class="explainer fll">
+
+    <details>
+  <summary>
+    <span class="twistUp"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none"> <path d="M0 0h24v24H0V0z" fill="none"/> <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/> </svg>
+    </span>
+    <h3 id="Bronze" class="Luv275 fw6 h3Query">APCA Guidelines: Bronze Level</h3>
+  </summary>
+  <h3>CONFORMANCE: BRONZE LEVELS (preliminary)</h3>
+
+  <p>
+    These general levels are appropriate for use without reference to
+    the lookup table (Bronze level conformance).
+    For Silver level conformance, see the lookup table which improves
+    accuracy and allows for greater flexibility.
+  </p>
+
+  <ul>
+    <li><strong>Lc&nbsp;90</strong> • Preferred level for fluent text and columns of body text with a font no smaller than 18px/weight 300 or 14px/weight 400 (normal), or non-body text with a font no smaller than 12px. Also a recommended minimum for extremely thin fonts with a minimum of 24px at weight 200. Lc&nbsp;90 is a <em>suggested maximum</em> for <strong>very large and bold fonts</strong> (greater than 36px bold), and large areas of color. </li>
+    <li><strong>Lc&nbsp;75</strong> • The <em>minimum</em> level for columns of body text with a font no smaller than 24px/300 weight, 18px/400, 16px/500 and 14px/700. This level may be used with non-body text with a font no smaller than 15px/400. Also, Lc&nbsp;75 should be considered a minimum for larger for any larger text where readability is important. </li>
+    <li><strong>Lc&nbsp;60</strong> • The <em>minimum</em> level recommended for content text that is not body, column, or block text. In other words, text you want people to read. The minimums: no smaller than 48px/200, 36px/300, 24px normal weight (400), 21px/500, 18px/600, 16px/700 (bold). These values based on the reference font Helvetica. To use these sizes as body text, add Lc&nbsp;15 to the minimum contrast. </li>
+    <li> <strong>Lc&nbsp;45</strong> • The <em>minimum</em> for larger, heavier text (36px normal weight or 24px bold) such as headlines, and large text that should be fluently readabile but is not body text. This is also the minimum for pictograms with fine details, or smaller outline icons, , no less than 4px in its smallest dimension. </li>
+    <li><strong>Lc&nbsp;30</strong> • The <em>absolute minimum</em> for any text not listed above, which means non-content text considered as &quot;spot readable&quot;. This includes placeholder text and disabled element text, and some non-content like a copyright bug. This is also the minimum for large/solid semantic &amp; understandable non-text elements such as &quot;mostly solid&quot; icons or pictograms, no less than 10px in its smallest dimension. </li>
+    <li><strong>Lc&nbsp;15</strong> • The <em>absolute minimum</em> for any non-text that needs to be <em>discernible</em> and differentiable, but does not apply to semantic non-text such as icons, and is no less than 15px in its smallest dimention. This may include dividers, and in <em>some</em> cases large buttons or thick focus visible outlines, but does <em>not</em> include fine details which have a higher minimum. <strong>Designers should treat anything below this level as invisible</strong>, as it will not be visible for many users. This minimum level should be avoided for any items important to the use, understanding, or interaction of the site. </li>
+  </ul>
+
+  <p>These define the basic minimum levels, what you might think of as A/AA as in the old WCAG&nbsp;2. For the equivelent to AAA, simply increase the contrast values by Lc&nbsp;15. </p>
+
+</details>
+
+
+<details>
+  <summary>
+    <span class="twistUp"> <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none"> <path d="M0 0h24v24H0V0z" fill="none"/> <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/> </svg>
+    </span>
+    <h3 class="Luv275 fw6 h3Query">
+      APCA Font Table: Silver Level</h3>
+  </summary>
+
+  <h3>CONFORMANCE: SILVER LOOKUP TABLE (prelim)</h3>
+
+  <p>The table below is current as of May 28, 2022.</p>
+  <div style="max-width: 640px;">
+    <ul>
+     <li> Cross index reference font size (in CSS px) to CSS weight. </li>
+      <li> Reference fonts for comparison include Barlow, Helvetica Neue, Helvetica, Fira Sans, Kanit, and Arial. </li>
+      <li> APCA Contrast <span class="Lc">L<sup>c</sup></span> value must meet or exceed the value listed, however, values may be interpolated between the two closest values. </li>
+      <li> For light text on a dark background the APCA tool will show a negative <span class="Lc">L<sup>c</sup></span> value. Simply use the absolute (positive) value. For example, if the APCA value is <span class="Lc">L<sup>c</sup>-58</span>, use <span class="Lc">L<sup>c</sup></span>&nbsp;58. </li>
+      <li> A<span class="underWeightSpan"> &osol; </span>indicates that a larger font size (or heavier font weight) must be used. </li>
+      <li> Cells marked with <span class="fwb fs15 bodyText"></span> may be used for body text. The the body text cells outlined in yellow, add lc 15. </li>
+    </ul>
+
+  <div id="lookup-table" style="overflow: scroll;">
+    <table class="APCAtableFS">
+        <tr>
+          <th colspan="11" class="tableTitle" style="line-height: 1; font-size: 1.5em;">APCA FONT TO CONTRAST TABLE</th>
+        </tr>
+        <tr>
+          <th colspan="11" class="tableTitle" style="font-weight: 500;line-height: 1;font-size: 1.4em;">Sorted by Font Size</th>
+        </tr>
+        <tr>
+          <th colspan="11" class="tableTitle" style="line-height: 1; height: 1em; padding: 0 0 8px; font-size: 0.9em; font-weight: 300; vertical-align: top; letter-spacing: 0.2em;">Beta 0.1.7 (G) • Revised May 27, 2022</th>
+        </tr> 
+        <tr>
+          <th colspan="2" class="tableTitle" style="font-weight: 500; font-size: 1em;"></th>
+          <th colspan="9" class="tableTitle" style="font-weight: 500;font-size: 1.4em; letter-spacing: 0.15em;">Reference Font Weight</th>
+        </tr>
+        <tr>
+          <th colspan="2" class="tableTitle" style="letter-spacing: 0.2em;font-weight: 500; font-size: 1.2em;">Font<br>Size</th>
+          <th class="weight weight1">100</th>
+          <th class="weight weight2">200</th>
+          <th class="weight weight3">300</th>
+          <th class="weight weight4">400<div class="">Normal</div></th>
+          <th class="weight weight5">500</th>
+          <th class="weight weight6">600</th>
+          <th class="weight weight7">700<div class="">Bold</div></th>
+          <th class="weight weight8">800</th>
+          <th class="weight weight9">900</th>
+        </tr>
+        <tr style="">
+          <th class="tableTitle" style="color: #8af2ff; background-color: #066; font-size: 1.1em;">pt</th>
+          <th class="tableTitle" style="color: #fff; background-color: #28b; font-size: 1.1em;">px</th>           
+          <th colspan="9" class="tableTitle" style="font-size: 1.1em; letter-spacing: 0.15em; color: #FFF; background-color: #629;">APCA Contrast Value (L<sup>c</sup>)</th>
+        </tr>
+
+      <tr>
+      <th class="ptText">9</th>
+      <th class="pxText">12</th>
+        <td class="underWeight">⊘</td>
+        <td class="underWeight">⊘</td>
+        <td class="underWeight">⊘</td>
+        <td class="copyOnly">®©</td>
+        <td class="copyOnly borderRight">®©</td>
+  
+        <td class="copyOnly borderLeft">®©</td>
+        <td class="copyOnly">®©</td>
+        <td class="underWeight">⊘</td>
+        <td class="underWeight">⊘</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">10.5</th>
+      <th class="pxText">14</th>
+        <td class="underWeight">⊘</td>
+        <td class="underWeight">⊘</td>
+        <td class="copyOnly">®©</td>
+        <td class="g4gVal100 bodyText">100</td>
+        <td class="g4gVal100 bodyText  borderRight">100</td>
+  
+        <td class="g4gVal90 bodyText  borderLeft">90</td>
+        <td class="g4gVal75 bodyText ">75</td>
+        <td class="underWeight">⊘</td>
+        <td class="underWeight">⊘</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">11.25</th>
+      <th class="pxText">15</th>
+        <td class="underWeight">⊘</td>
+        <td class="underWeight">⊘</td>
+        <td class="copyOnly">®©</td>
+        <td class="g4gVal100 bodyText ">100</td>
+        <td class="g4gVal90 bodyText  borderRight">90</td>
+  
+        <td class="g4gVal75 bodyText  borderLeft">75</td>
+        <td class="g4gVal70 bodyTextPlus ">70</td>
+        <td class="underWeight">⊘</td>
+        <td class="underWeight">⊘</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">12</th>
+      <th class="pxText">16</th>
+        <td class="underWeight">⊘</td>
+        <td class="underWeight">⊘</td>
+        <td class="copyOnly">®©</td>
+        <td class="g4gVal90 bodyText ">90</td>
+        <td class="g4gVal75 bodyText  borderRight">75</td>
+  
+        <td class="g4gVal70 bodyTextPlus  borderLeft">70</td>
+        <td class="g4gVal60 bodyTextPlus ">60</td>
+        <td class="g4gVal60 noBody">60</td>
+        <td class="underWeight">⊘</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">13.5</th>
+      <th class="pxText">18</th>
+        <td class="underWeight">⊘</td>
+        <td class="copyOnly">®©</td>
+        <td class="g4gVal100 bodyText">100</td>
+        <td class="g4gVal75 bodyText ">75</td>
+        <td class="g4gVal70 bodyTextPlus  borderRight">70</td>
+  
+        <td class="g4gVal60 bodyTextPlus  borderLeft">60</td>
+        <td class="g4gVal55 bodyTextPlus ">55</td>
+        <td class="g4gVal55 noBody">55</td>
+        <td class="g4gVal55 noBody">55</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">15.75</th>
+      <th class="pxText">21</th>
+        <td class="underWeight">⊘</td>
+        <td class="copyOnly">®©</td>
+        <td class="g4gVal90 bodyText ">90</td>
+        <td class="g4gVal70 bodyText ">70</td>
+        <td class="g4gVal60 bodyTextPlus  borderRight">60</td>
+  
+        <td class="g4gVal55 bodyTextPlus  borderLeft">55</td>
+        <td class="g4gVal50 bodyTextPlus ">50</td>
+        <td class="g4gVal50 noBody">50</td>
+        <td class="g4gVal50 noBody">50</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">18</th>
+      <th class="pxText">24</th>
+        <td class="underWeight">⊘</td>
+        <td class="copyOnly">®©</td>
+        <td class="g4gVal75 bodyText">75</td>
+        <td class="g4gVal60 bodyTextPlus ">60</td>
+        <td class="g4gVal55 bodyTextPlus  borderRight">55</td>
+  
+        <td class="g4gVal50 bodyTextPlus  borderLeft">50</td>
+        <td class="g4gVal45 bodyTextPlus ">45</td>
+        <td class="g4gVal45 noBody">45</td>
+        <td class="g4gVal45 noBody">45</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">21</th>
+      <th class="pxText">28</th>
+        <td class="underWeight">⊘</td>
+        <td class="g4gVal100">100</td>
+        <td class="g4gVal70 bodyTextPlus">70</td>
+        <td class="g4gVal55 bodyTextPlus ">55</td>
+        <td class="g4gVal50 bodyTextPlus  borderRight">50</td>
+  
+        <td class="g4gVal45 bodyTextPlus  borderLeft">45</td>
+        <td class="g4gVal43 bodyTextPlus ">43</td>
+        <td class="g4gVal43 noBody">43</td>
+        <td class="g4gVal43 noBody">43</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">24</th>
+      <th class="pxText">32</th>
+        <td class="underWeight">⊘</td>
+        <td class="g4gVal90">90</td>
+        <td class="g4gVal65 bodyTextPlus">65</td>
+        <td class="g4gVal50 bodyTextPlus ">50</td>
+        <td class="g4gVal45 bodyTextPlus  borderRight">45</td>
+  
+        <td class="g4gVal43 bodyTextPlus  borderLeft">43</td>
+        <td class="g4gVal40 bodyTextPlus ">40</td>
+        <td class="g4gVal40 noBody">40</td>
+        <td class="g4gVal40 noBody">40</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">27</th>
+      <th class="pxText">36</th>
+        <td class="underWeight">⊘</td>
+        <td class="g4gVal75">75</td>
+        <td class="g4gVal60 bodyTextPlus">60</td>
+        <td class="g4gVal45 bodyTextPlus ">45</td>
+        <td class="g4gVal43 bodyTextPlus  borderRight">43</td>
+  
+        <td class="g4gVal40 bodyTextPlus  borderLeft">40</td>
+        <td class="g4gVal38 bodyTextPlus ">38</td>
+        <td class="g4gVal38 noBody">38</td>
+        <td class="g4gVal38 noBody">38</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">31.5</th>
+      <th class="pxText">42</th>
+        <td class="g4gVal100 g4gLite">100</td>
+        <td class="g4gVal70">70</td>
+        <td class="g4gVal55 ">55</td>
+        <td class="g4gVal43 ">43</td>
+        <td class="g4gVal40  borderRight">40</td>
+  
+        <td class="g4gVal38  borderLeft">38</td>
+        <td class="g4gVal35 ">35</td>
+        <td class="g4gVal35 noBody">35</td>
+        <td class="g4gVal35 noBody">35</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">36</th>
+      <th class="pxText">48</th>
+        <td class="g4gVal90 g4gLite">90</td>
+        <td class="g4gVal60">60</td>
+        <td class="g4gVal50 ">50</td>
+        <td class="g4gVal40 ">40</td>
+        <td class="g4gVal38  borderRight">38</td>
+  
+        <td class="g4gVal35  borderLeft">35</td>
+        <td class="g4gVal33  borderLeftTop ">33</td>
+        <td class="g4gVal33  borderTop noBody">33</td>
+        <td class="g4gVal33  borderTop noBody">33</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">45</th>
+      <th class="pxText">60</th>
+        <td class="g4gVal75 g4gLite">75</td>
+        <td class="g4gVal55">55</td>
+        <td class="g4gVal45 ">45</td>
+        <td class="g4gVal38 ">38</td>
+        <td class="g4gVal35 ">35</td>
+  
+        <td class="g4gVal33 borderLeftTop">33</td>
+        <td class="g4gVal30 ">30</td>
+        <td class="g4gVal30 noBody">30</td>
+        <td class="g4gVal30 noBody">30</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">54</th>
+      <th class="pxText">72</th>
+        <td class="g4gVal60 g4gLite">60</td>
+        <td class="g4gVal50">50</td>
+        <td class="g4gVal40 ">40</td>
+        <td class="g4gVal35 ">35</td>
+        <td class="g4gVal33 borderLeftTop">33</td>
+  
+        <td class="g4gVal30 ">30</td>
+        <td class="g4gVal30 ">30</td>
+        <td class="g4gVal30 noBody">30</td>
+        <td class="g4gVal30 noBody">30</td>
+      </tr>
+
+      <tr>
+      <th class="ptText">72</th>
+      <th class="pxText">96</th>
+        <td class="g4gVal50 g4gLite">50</td>
+        <td class="g4gVal45">45</td>
+        <td class="g4gVal35 ">35</td>
+        <td class="g4gVal33 borderLeftTop">33</td>
+        <td class="g4gVal30 ">30</td>
+  
+        <td class="g4gVal30 ">30</td>
+        <td class="g4gVal30 ">30</td>
+        <td class="g4gVal30 noBody">30</td>
+        <td class="g4gVal30 noBody">30</td>
+      </tr>
+      <tr>
+       <th colspan="11" class="tableTitle" style="height: 0.75em; font-size: 0.5em; font-weight: 300;"> Copyright © 2022 by Myndex Research. All Right Reserved. </th>
+      </tr>
+    </table>
+</div>
+
+    <p class="fs08"> The vertical line between weights 500 and 600 indicates the point that a user agent switches from "normal" to "bold" if the intermediate weights are not available. </p>
+
+<table class="centeredTable" style="background: #309; padding: 0; border-width: 4px; border-radius: 22px 22px 16px 16px ; border-collapse: separate; border-spacing: 0;">
+    <tr style="   color: #FFF; background-color: #309; border: 1px solid #94B; ">
+       <th colspan="1" class="tableTitle" style="  text-align: center; height: 2em; font-size: 1.5em; border: 1px solid #94B; border-radius: 18px 18px 0 0;">APCA Contrast Legend</th>
+    </tr>
+      <tr style="background-color: #e8f5ff" ;>
+         <td class="colorCodes underWeight"> <span style="font-size:1.8em; line-height:0.2;">⊘</span> — Prohibited Except for Decorative Purposes</td>
+      </tr>
+      <tr style="background-color: #e8f5ff" ;>
+         <td class="colorCodes nonText borderNT" tyle="border-width: 6px;"><span style="font-size:1.8em; line-height:0.7;"></span>Under Lc 30 is for non-text only.</td>
+      </tr>
+      <tr style="background-color: #e8f5ff" ;>
+        <td class="colorCodes copyOnly ffh"><span style="font-size:1.4em; font-weight:700;">©§™</span> — Placeholder/Disabled/Copyright ONLY</td>
+      </tr>
+      <!--
+        <tr>
+          <td class="colorCodes bgOrLt"> <span style="font-size:1.8em; line-height:0.7;">&times;</span> — Do Not Use for Body Text (Blocks or Columns)</td>
+        </tr>
+      -->
+      <tr style="background-color: #e8f5ff;">
+        <td class="colorCodes g4gLite cR" style="border-width: 10px;">
+          Weight 100 Fonts Should be Avoided
+        </td>
+      </tr>
+      <tr style="background-color: #e8f5ff;">
+        <td class="colorCodes bodyTextPlus" style="border-width: 9px;">
+          To use as Block/Body Text, ADD Lc 15
+        </td>
+      </tr>
+      <tr style="background-color: #e8f5ff;">
+        <td class="colorCodes bodyText" style="border-width: 12px;">
+          Block/Body Text Zone—okay minimum values
+        </td>
+      </tr>
+      <tr style="background-color: #e8f5ff;">
+        <td class="colorCodes  g4gVal90 borderVisible">
+          APCA Lc 90 — "Similar" to ISO 10∶1
+        </td>
+      </tr>
+      <tr style="background-color: #e8f5ff;">
+        <td class="colorCodes  g4gVal75 borderVisible">
+          APCA Lc 75 — "Similar" to WCAG 7∶1
+        </td>
+      </tr>
+      <tr style="background-color: #e8f5ff;">
+        <td class="colorCodes  g4gVal60 borderVisible">
+          APCA Lc 60 — "Similar" to WCAG 4.5∶1
+        </td>
+      </tr>
+      <tr style="background-color: #e8f5ff;">
+        <td class="colorCodes  g4gVal45 borderVisible">
+          APCA Lc 45 — "Similar" to WCAG 3∶1
+        </td>
+      </tr>
+      <tr style="background-color: #e8f5ff;">
+        <td class="colorCodes g4gVal30 borderVisible">
+          <span style="font-size:1.2em; font-weight:700;">&gt; 30</span> — Minimum Contrast for Any Text
+        </td>
+      </tr>
+      <tr>
+        <th class="colorCodes tableTitle" style="border-radius: 0 0 12px 12px; height: 0.75em; text-align: center; font-size: 0.6em; font-weight: 300; color: #fff; background: #309;">Copyright © 2022 by Myndex Research. All Right Reserved.</th>
+      </tr>
+    </table>
+
+
+
+
+<hr>
+
+
+
+
+<div style="overflow: scroll;">
+  <table class="APCAtableLc">
+    <tr>
+      <th colspan="11" class="tableTitle" style="line-height: 1; font-size: 1.5em;">APCA CONTRAST TO FONT TABLE</th>
+        </tr>
+        <tr>
+          <th colspan="11" class="tableTitle" style="font-weight: 500;line-height: 1;font-size: 1.4em;">Sorted by Contrast Lc Value</th>
+        </tr>
+        <tr>
+          <th colspan="11" class="tableTitle" style="line-height: 1; height: 1em; padding: 0 0 8px; font-size: 0.9em; font-weight: 300; vertical-align: top; letter-spacing: 0.2em;">Beta 0.1.7 (G) • Revised May 27, 2022</th>
+        </tr>
+        <tr>
+          <th colspan="2" class="tableTitle" style="font-weight: 500; font-size: 1em;"></th>
+          <th colspan="9" class="tableTitle" style="font-weight: 500;font-size: 1.4em; letter-spacing: 0.15em;">Reference Font Weight</th>
+        </tr>
+        <tr>
+          <th colspan="2" class="tableTitle" style="font-weight: 500; font-size: 1.1em;">Contrast</th>
+      <th class="weight weight1">100</th>
+      <th class="weight weight2">200</th>
+      <th class="weight weight3">300</th>
+      <th class="weight weight4">400<div class="">Normal</div></th>
+      <th class="weight weight5">500</th>
+      <th class="weight weight6">600</th>
+      <th class="weight weight7">700<div class="">Bold</div></th>
+      <th class="weight weight8">800</th>
+      <th class="weight weight9">900</th>
+    </tr>
+    <tr style="">
+      <th colspan="2" class="tableTitle" style="color: #fed; background-color: #28b; font-size: 1.1em;">Lc Value</th>
+      <th colspan="9" class="tableTitle" style="font-size: 1.1em; letter-spacing: 0.15em; color: #FFF; background-color: #629;">Font Size in CSS px</th>
+    </tr>
+
+  <tr>
+    <th colspan="2" class="LcValue"><sup>Lc</sup> 100</th>
+      <td class="pxText minSize g4gLite2">42</td>
+      <td class="pxText minSize">26.5</td>
+      <td class="pxText minSize bodyText">18.5</td>
+      <td class="pxText minSize bodyText">15</td>
+      <td class="pxText minSize bodyText borderRight">14.5</td>
+  
+      <td class="pxText minSize borderLeft">13.5</td>
+      <td class="pxText minSize">13</td>
+      <td class="pxText minSize">16</td>
+      <td class="pxText minSize">18</td>
+  </tr>
+  
+  <tr>
+    <th colspan="2" class="LcValue"><sup>Lc</sup> 95</th>
+      <td class="pxText g4gLite2">45</td>
+      <td class="pxText">28</td>
+      <td class="pxText bodyText">19.5</td>
+      <td class="pxText bodyText">15.5</td>
+      <td class="pxText bodyText borderRight">15</td>
+  
+      <td class="pxText bodyText borderLeft">14</td>
+      <td class="pxText">13.5</td>
+      <td class="pxText minSize">16</td>
+      <td class="pxText minSize">18</td>
+      </tr>
+      
+    <tr class="g4gVal90">
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 90</th>
+      <td class="pxText g4gLite2">48</td>
+      <td class="pxText">32</td>
+      <td class="pxText bodyText">21</td>
+      <td class="pxText bodyText">16</td>
+      <td class="pxText bodyText borderRight">15.5</td>
+  
+      <td class="pxText bodyText borderLeft">14.5</td>
+      <td class="pxText bodyText">14</td>
+      <td class="pxText minSize">16</td>
+      <td class="pxText minSize">18</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 85</th>
+      <td class="pxText g4gLite2">52</td>
+      <td class="pxText">34.5</td>
+      <td class="pxText bodyText">22</td>
+      <td class="pxText bodyText">16.5</td>
+      <td class="pxText bodyText borderRight">15.6</td>
+  
+      <td class="pxText bodyText borderLeft">14.6</td>
+      <td class="pxText bodyText">14</td>
+      <td class="pxText minSize">16</td>
+      <td class="pxText minSize">18</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 80</th>
+      <td class="pxText g4gLite2">56</td>
+      <td class="pxText">38.3</td>
+      <td class="pxText bodyText">23</td>
+      <td class="pxText bodyText">17.3</td>
+      <td class="pxText bodyText borderRight">15.8</td>
+  
+      <td class="pxText bodyText borderLeft">14.8</td>
+      <td class="pxText bodyText">14</td>
+      <td class="pxText minSize">16</td>
+      <td class="pxText minSize">18</td>
+    </tr>
+    <tr class="g4gVal75">
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 75</th>
+      <td class="pxText g4gLite2">60</td>
+      <td class="pxText">42</td>
+      <td class="pxText bodyText">24</td>
+      <td class="pxText bodyText">18</td>
+      <td class="pxText bodyText borderRight">16</td>
+  
+      <td class="pxText bodyText borderLeft">15</td>
+      <td class="pxText bodyText">14</td>
+      <td class="pxText minSize">16</td>
+      <td class="pxText minSize">18</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 70</th>
+      <td class="pxText g4gLite2">64</td>
+      <td class="pxText">44</td>
+      <td class="pxText bodyTextPlus">28</td>
+      <td class="pxText bodyTextPlus">19.5</td>
+      <td class="pxText bodyTextPlus borderRight">18</td>
+  
+      <td class="pxText bodyTextPlus borderLeft">16</td>
+      <td class="pxText bodyTextPlus">14.5</td>
+      <td class="pxText minSize">16</td>
+      <td class="pxText minSize">18</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 65</th>
+      <td class="pxText g4gLite2">68</td>
+      <td class="pxText">46</td>
+      <td class="pxText">32</td>
+      <td class="pxText bodyTextPlus">21.7</td>
+      <td class="pxText bodyTextPlus borderRight">19</td>
+  
+      <td class="pxText bodyTextPlus borderLeft">17</td>
+      <td class="pxText bodyTextPlus">15</td>
+      <td class="pxText minSize">16</td>
+      <td class="pxText minSize">18</td>
+    </tr>
+    <tr class="g4gVal60">
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 60</th>
+      <td class="pxText g4gLite2">72</td>
+      <td class="pxText">48</td>
+      <td class="pxText">42</td>
+      <td class="pxText bodyTextPlus">24</td>
+      <td class="pxText bodyTextPlus borderRight">21</td>
+  
+      <td class="pxText bodyTextPlus borderLeft">18</td>
+      <td class="pxText bodyTextPlus">16</td>
+      <td class="pxText minSize">16</td>
+      <td class="pxText minSize">18</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 55</th>
+      <td class="pxText g4gLite2">80</td>
+      <td class="pxText">60</td>
+      <td class="pxText">48</td>
+      <td class="pxText bodyTextPlus">28</td>
+      <td class="pxText bodyTextPlus borderRight">24</td>
+  
+      <td class="pxText bodyTextPlus borderLeft">21</td>
+      <td class="pxText bodyTextPlus">18</td>
+      <td class="pxText ">18</td>
+      <td class="pxText minSize">18</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 50</th>
+      <td class="pxText g4gLite2">96</td>
+      <td class="pxText">72</td>
+      <td class="pxText">60</td>
+      <td class="pxText bodyTextPlus">32</td>
+      <td class="pxText bodyTextPlus borderRight">28</td>
+  
+      <td class="pxText bodyTextPlus borderLeft">24</td>
+      <td class="pxText bodyTextPlus">21</td>
+      <td class="pxText">21</td>
+      <td class="pxText">21</td>
+    </tr>
+    <tr class="g4gVal45">
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 45</th>
+      <td class="pxText g4gLite2">108</td>
+      <td class="pxText">96</td>
+      <td class="pxText">72</td>
+      <td class="pxText">42</td>
+      <td class="pxText bodyTextPlus borderRight">32</td>
+  
+      <td class="pxText bodyTextPlus borderLeft">28</td>
+      <td class="pxText bodyTextPlus">24</td>
+      <td class="pxText">24</td>
+      <td class="pxText">24</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 40</th>
+      <td class="pxText g4gLite2">120</td>
+      <td class="pxText">108</td>
+      <td class="pxText">96</td>
+      <td class="pxText">60</td>
+      <td class="pxText borderRight">48</td>
+  
+      <td class="pxText borderLeft">42</td>
+      <td class="pxText">32</td>
+      <td class="pxText">32</td>
+      <td class="pxText">32</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 35</th>
+      <td class="nonText">NT</td>
+      <td class="pxText g4gVal35">120</td>
+      <td class="pxText g4gVal35">108</td>
+      <td class="pxText g4gVal35">96</td>
+      <td class="pxText g4gVal35 borderRight">72</td>
+  
+      <td class="pxText g4gVal35 borderLeft">60</td>
+      <td class="pxText g4gVal35">48</td>
+      <td class="pxText g4gVal35">48</td>
+      <td class="pxText g4gVal35">48</td>
+    </tr>
+    <tr class="g4gVal30">
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 30</th>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+      <td class="pxText g4gVal30">120</td>
+      <td class="pxText g4gVal30">108</td>
+      <td class="pxText g4gVal30 borderRight">108</td>
+  
+      <td class="pxText g4gVal30 borderLeft">96</td>
+      <td class="pxText g4gVal30">72</td>
+      <td class="pxText g4gVal30">72</td>
+      <td class="pxText g4gVal30">72</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 25</th>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+      <td class="pxText g4gVal25">120</td>
+      <td class="pxText g4gVal25 borderRight">120</td>
+  
+      <td class="pxText g4gVal25 borderLeft">108</td>
+      <td class="pxText g4gVal25">96</td>
+      <td class="pxText g4gVal25">96</td>
+      <td class="pxText g4gVal25">96</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="LcValue"><sup>Lc</sup> 20</th>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+      <td class="nonText borderRight">NT</td>
+  
+      <td class="nonText borderLeft">NT</td>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+    </tr>
+    <tr>
+      <th colspan="2" class="LcValue"><sup>Lc</sup>15</th>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+      <td class="nonText borderRight">NT</td>
+  
+      <td class="nonText borderLeft">NT</td>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+      <td class="nonText">NT</td>
+    </tr>
+    <tr>
+      <th colspan="11" class="tableTitle" style="height: 0.75em; font-size: 0.5em; font-weight: 300;">
+          Copyright © 2022 by Myndex Research. All Right Reserved.
+      </th>
+    </tr>
+  </table>
+</div>
+
+
+  <ul>
+    <li> Values shown are for common sans-serif fonts (e.g., Helvetica, Arial, Verdana, Montserrat, Roboto, Calibri, Trebuchet).
+    </li>
+    <li> Many serif fonts should use values for the row above (e.g., Times, Georgia, Cambria, Courier), and especially should be compared in terms of x-height.
+    </li>
+    <li> Decorative, unusual, and very thin fonts should be avoided for fluently readable text and especially columns of body text.
+    </li>
+    <li> Due to the vast variety of font designs, designers should visually compare an unusual font to a standard font such as Helvetica, using the size and weight of Helvetica that most closesly matches the appearance of the tested font as a guide.
+    </li>
+    <li> Designers are cautioned that the use of "-webkit-font-smoothing: antialiasing" is strongly discouraged. Bypassing default antialiasing in this way can drastically reduce contrast for small or thin fonts.
+    </li>
+  </ul>
+  </div> <!-- close width div -->
+    </details>
+
+
+    <details>
+      <summary>
+        <span class="twistUp">
+          <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/>
+          </svg>
+        </span>
+        <h3 class="Luv275 fw6 h3Query" style="">
+          Notes on Font Size &amp; Weight
+        </h3>
+      </summary>
+<ul> 
+  <li>Font sizes assume an x-height ratio of at least 0.5 (0.52 or more preferred). 
+  <ul> 
+    <li>I.e. the vertical size of the lower case x is at least one-half the font size or larger, as rendered to screen. 
+    <li>The reference font x-height ratio is 0.5, and it is preferential to use an x-height of 0.52 to 0.57 
+  </ul> 
+  <li>Font weight is based on highly standardized reference fonts such as Helvetica or Arial.
+  <li>&quot;px&quot; means the CSS reference px, not device pixels. The reference px is defined as 1.278 arc minutes of visual angle. </li> 
+  <li> When selecting, or testing, a font size, simply determine the font's x-height ratio, and the amount it needs to be increased. 
+  <li>EXAMPLE: 
+  <ul> 
+    <li> For instance, Times New Roman has an x-height ratio of 0.45, so it needs to be increased about 16% in size relative to the reference font. 
+    <li>Therefore, if the reference font is set at 1em, Times should be set at 1.16em to be equivalent. 
+    <li>If Times is the main document font, this adjustment can be set for the entire document using the root element via the <code> html </code> selector. 
+    <ul>
+      <li><code>html { font-size: 18.6px }</code> sets the entire documents rem (root em) such that 1rem = 18.6px 
+    </ul> 
+  </ul>
+  </li> 
+  <li> For font weight, simply set a line of test text in the reference Arial or Helvetical at 400 weight and then below that the same text text in the new font. Try different weights to find the closest match. 
+  <ul> 
+    <li> As an example, the font Raleway 400 weight is closest to Helvetica 300. </li> 
+    <li> So, always add 100 in weight to Raleway to be equivelent. </li> 
+    <li> See <a href="https://github.com/Myndex/SAPC-APCA/discussions/28#discussioncomment-1610289">this discussion answer</a> for more. </li> 
+  </ul> </li> 
+  <li> Consider the font design as well as the basic size and weight, and the potential impact on readability. See <a href="https://www.researchgate.net/publication/338149302_Evaluating_Fonts_Font_Family_Selection_for_Accessibility_Display_Readability">this PDF <strong>&quot;Evaluating Fonts&quot;</strong> </a> for general guidance and a comparison of a few dozen fonts for accessibility. </li> 
+</ul>
+    </details>
+
+
+    <details>
+      <summary>
+        <span class="twistUp">
+          <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/>
+          </svg>
+        </span>
+        <h3 id="bridge-pca" class="Luv275 fw6 h3Query" style="">
+          WCAG&nbsp;2 compatibility
+        </h3>
+      </summary>
+
+
+  <p>
+    To use the APCA tool for minimum Bridge-PCA conformance (backwards
+    compatible for WCAG&nbsp;2):
+  </p>
+
+  <ul>
+    <li><b>90</b> • Lc 90 replaces WCAG <b>7:1</b></li>
+    <li><b>75</b> • Lc 75 replaces WCAG <b>4.5:1</b></li>
+    <li><b>60</b> • Lc 60 replaces WCAG <b>3:1</b></li>
+    <li>
+      <b>WoB</b> • For light text on a darker background, when the
+      text is lighter than <code> #eee </code>, increase the minimum
+      value by Lc 10. The dedicated Bridge-PCA tool takes this into
+      account automatically.
+    </li>
+  </ul>
+
+  <p>
+    <strong>NEW!!</strong> If you need to be backwards compatible, the
+    new Bridge-PCA can help! <a href="https://www.myndex.com/BPCA/">Bridge PCA</a> is
+    backwards compatible with WCAG&nbsp;2, shows contrast as both Lc
+    value, <em>and</em> the traditional WCAG&nbsp;2ratios, but with a
+    twist: The "ratios" shown on Bridge PCA are perceptually accurate!
+  </p>
+  <p>
+    This is possible because Bridge PCA uses APCA technology to
+    generate "ratios" that look and feel very much like those of WCAG
+    2.
+  </p>
+
+</details>
+  </section>
+
+    <section id="apca-science" class="explainer flr">
+
+    <details>
+      <summary>
+        <span class="twistUp"> <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none"> <path d="M0 0h24v24H0V0z" fill="none"/> <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/> </svg>
+        </span>
+        <h3 class="Luv275 fw6 h3Query" id="the-accessible-perceptual-contrast-algorithm">Accessible Perceptual Contrast</h3>
+    </summary>
+
+      <p>
+        APCA is a new method for calculating and predicting readability
+        contrast. APCA is a part of the larger S-Luv Accessible
+        Readability Color Appearance Model known as SARCAM (formerly
+        SAPC). These models are specifically related to color appearance
+        on self-illuminated RGB computer displays &amp; devices, and also
+        for modeling accessible user needs, with a focus on readability.
+      </p>
+
+      <h3 class="h3Query" style="" id="lightness-contrast">
+        Lightness contrast L<sup>c</sup>
+      </h3>
+
+      <p>
+        The APCA generates a contrast value based on a color pair, and
+        this value is perceptually based: that is, regardless of how light
+        or dark the colors are, a contrast value of Lc&nbsp;60 represents
+        the same <em>perceived</em> readability contrast. This is
+        absolutely not the case with WCAG&nbsp;2.x, which far overstates
+        contrast for dark colors to the point that 4.5:1 can be
+        functionally unreadable when a color is near black. As a result,
+        WCAG&nbsp;2.x contrast cannot be used for guidance designing
+        &quot;dark mode&quot;.
+      </p>
+      <p>
+        The APCA contrast value is perceptually uniform, and pivots near
+        the point where the CS curve flattens due to contrast constancy.
+        Halving or doubling the APCA value relates to a halving or
+        doubling of the perceived contrast. There is a subtle weighting
+        for higher contrasts to smaller, thinner fonts.
+      </p>
+
+      <h3 class="h3Query" style="" id="different-uses-different-contrasts">
+        Different Uses, Different Contrasts
+      </h3>
+
+      <p>
+        The APCA has a set of levels related to use cases — for instance,
+        Lc&nbsp;90 is <em>preferred</em> and Lc&nbsp;75 is the
+        <em>minimum</em> for body text. This makes for an easy way to use
+        ACPA, very similar to 1.4.3 in terms of ease of use.
+      </p>
+      <p>
+        The APCA also has an <strong>optional</strong> lookup table to
+        associate font size and weight to the readability contrast
+        (Lc&nbsp;value). The lookup tables allow for even greater accuracy
+        and therefore greater flexibility in design.
+      </p>
+
+      <h3 class="h3Query" style="" id="failing-pass-fail">
+        Failing Pass/Fail
+      </h3>
+
+      <p>
+        A key takeaway is that a strict pass/fail with a blanket contrast
+        ratio is not instructive as a guideline, and does not necessarily
+        solve a given user need. In fact, user needs when it comes to
+        contrast are conflicting—what is good for one can be harmful to
+        another. This is even true of font size.
+      </p>
+      <p>
+        This points to the importance of real user personalization, an
+        area where the technology is literally missing (and a work in
+        progress). For the guidelines though, we can set ranges for
+        targets and expectations toward making the web readable for all.
+      </p>
+
+    </details>
+
+    <details>
+      <summary>
+        <span class="twistUp"> <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none"> <path d="M0 0h24v24H0V0z" fill="none"/> <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/> </svg>
+        </span>
+
+        <h3 class="Luv275 fw6 h3Query"> The Science Behind SAPC/APCA </h3>
+      </summary>
+
+      <h3 class="h3Query"> <b>A</b>ccessible <b>P</b>erceptual <b>C</b>ontrast <b>A</b>lgorithm</h3>
+
+      <div>
+        <p>
+          For a brief overview and explanation of the SAPC math and
+          methods, take a look at
+          <a id="null02" href="https://www.myndex.com/WEB/WCAG_CE17polarity">Experiment Results CE17</a>, one of the polarity experiments. The discussion includes
+          graphs comparing SAPC to other contrast methods, and related
+          discussions.
+        </p>
+        <p>
+          Also, as spatial frequency is one of the most important
+          predictors of contrast perception and readability, see
+          <a id="null03" href="https://www.myndex.com/WEB/WCAG_CE14weight">Experiment Results CE14-weight</a>
+          for further explanations.
+        </p>
+        <p>
+          <span class="fw6">The "TL;DR" is:</span> like all human
+          perceptions, color and contrast are extremely context dependent.
+          In terms of readability, there is a "critical contrast" level,
+          and that level is more dependent on spatial frequency, which
+          relates to font weight, than a given color pair.
+        </p>
+        <p>
+          To accurately predict contrast perception, the Spatial
+          <em>(font weight &amp; size)</em>, color
+          <em>(perceived lightness difference between text and
+            background)</em>, and context
+          <em>(ambient light, surroundings, intended purpose of the
+            text)</em>
+          all need to be taken into account.
+        </p>
+        <h3 class="h3Query" style="text-align: center;">
+          What is the Contrast of This Page?
+        </h3>
+        <p>
+          Most of this page is set at <span class="Lc">L<sup>c</sup> </span>90. To help differentiate
+          between dark text on a light background and light text on dark,
+          the math reports the latter as a negative value. But for
+          purposes of the font lookup table, ignore the minus sign and use
+          the absolute value.
+        </p>
+      </div>
+    </details>
+    
+    <details>
+      <summary>
+        <span class="twistUp">
+        <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none"> <path d="M0 0h24v24H0V0z" fill="none"/> <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#34028b" fill="#230167"/></svg></span>
+          <h3 class="Luv275 fw6 h3Query">Links to Resources and Articles</h3>
+      </summary>
+
+
+    <a href="https://git.myndex.com/" class=""><button class="myndexButton queryButton centered cW" style="font-size:1.1em; min-width: 480px; min-height: 64px; margin: 20px; padding: Ω0.6rem;"><img class="fll" role="presentation" alt="icon" style="margin:0 0.3rem 0.3rem 1rem;" src="https://apcacontrast.com/images/MyndexEyeHiCon.jpg" height="42"/>Catalog&nbsp;of&nbsp;APCA&nbsp;resources,<br>documentation, and&nbsp;articles</button></a>
+
+
+    <a href="https://www.myndex.com/CVD/" class=""><button class="myndexButton queryButton centered cW" style="font-size:1.3em; margin: 20px; min-height: 64px; min-width: 480px; padding: 1.1rem 0.3rem 0.3rem"><img class="fll" role="presentation" alt="icon" style="margin:0 0.3rem 0.3rem 1rem;" src="https://myndex.com/CVD/faviconMasterSmall.jpg" height="42"/>Color&nbsp;Vision&nbsp;Deficiency&nbsp;Simulator</button></a>
+
+
+    <a href="https://github.com/Myndex/SAPC-APCA/blob/master/documentation/WhyAPCA.md#why-the-new-contrast-method-apca" class=""><button class="margin: 20px; myndexButton queryButton centered cW" style="font-size:1.4em; min-height: 64px; min-width: 480px; padding: 1.1rem 0.3rem 0.3rem"><img class="fll" role="presentation" alt="icon" style="margin:0 0.3rem 0.3rem 1rem;" src="/images/APCAcolor4SQUARE.png" height="42"/>Why APCA?</button></a>
+
+
+    <div class="por clr" style="max-width: 520px; clear: both; margin: 0.3em; padding:0;">
+    <h2 id="featured-articles">Featured Articles</h2>
+    <ul>
+    <li><p><a href="https://uxdesign.cc/better-reading-on-the-web-c943c4cfc91a"><strong>Better reading on the web</strong></a> published in UX Collective, this article discusses and demonstrates the problems with automated testing and WCAG 2 contrast.</p>
+    </li>
+    <li><p><a href="https://atangledwebweweave.com/please-stop-using-grey-text-3d3e71acfca8"><strong>Please Stop Using Grey Text</strong></a> on Tangled Web, debunking one of the worst myths about design contrast.</p>
+    </li>
+    <li><p><a href="https://atangledwebweweave.com/whats-red-black-also-not-read-573b9c0a97ed"><strong>What&#39;s Red &amp; Black &amp; Also Not Read?</strong></a> Do the WCAG 2 Contrast Guidelines Help Color Vision Issues? The answer may surprise you.</p>
+    </li>
+    <li><p><a href="https://atangledwebweweave.com/a-contrast-of-errors-373c2665d42a"><strong>A Contrast of Errors</strong></a> A look into the history of the WCAG 2 contrast guidelines, and a discussion of the proposed replacement, the APCA (Advanced Perceptual Contrast Algorithm).</p>
+    </li>
+    </ul>
+
+
+    <h2 id="github-documentation-and-articles">GitHub Documentation and Articles</h2>
+    <h3 id="_contrast_"><em>Contrast</em></h3>
+    <ul>
+    <li><a href="https://github.com/Myndex/SAPC-APCA/WhyAPCA.md"><strong>Why APCA?</strong></a> A brief overview of WCAG_2 contrast issues and how APCA solves them.</li>
+    </ul>
+
+
+    <h3 id="_new-_-let-s-flip-for-color-https-gist-github-com-myndex-e1025706436736166561d339fd667493-lets-flip-for-color-"><em>NEW!</em> <a href="https://gist.github.com/Myndex/e1025706436736166561d339fd667493#lets-flip-for-color">Let&#39;s Flip for Color!</a></h3>
+    <p>If you want your text to be either black or white if the user selects some random color, just where is that inflection point? <strong>Hint: It&#39;s NOT 18% Y.</strong></p>
+
+    <ul>
+    <li>Part I: <a href="https://gist.github.com/Myndex/1dadb6dcac596f1cd7a5686a076f697f"><strong>Orange You Wondering About Contrast?</strong></a> Answering some contrast questions, and demonstrating a real solution to the infamous orange conundrum.</li>
+    <li>Part II: <a href="https://gist.github.com/Myndex/c30dba273aa5eca426ad9f5200917c9d"><strong>The Lighter Side of Dark Backgrounds</strong></a> An article comparing some parts of APCA with the old WCAG 2 contrast methods, demonstrating how WCAG_2 contrast does not help color vision types.</li>
+    <li>Part III: <a href="https://gist.github.com/Myndex/069a4079b0de2930e72d5401bde9af98#wcag-2-vs-apca-contrast-shootout"><strong>WCAG 2 vs APCA Contrast Shootout</strong></a>
+    Answering some recent questions regarding APCA, with comparisons and examples of the old (WCAG 2 1.4.3) and the future WCAG 3 / APCA.</li>
+    </ul>
+    <hr>
+    <h3 id="_color_"><em>Color</em></h3>
+    <ul>
+    <li>Part I: <a href="https://gist.github.com/Myndex/47c793f8a054041bd2b52caa7ad5271c#file-fortheluvofcolor-md"><strong>For The Luv of Color</strong></a> An article comparing CIE Lab and Luv colorspaces.</li>
+    <li>Part II: <a href="https://gist.github.com/Myndex/10caff6a68e844591e83eadeebfb4347"><strong>Will Work for Color</strong></a> A follow-up article on working spaces and related considerations. Introduces the concept of &quot;Web Working Spacelets&quot;.</li>
+    <li><a href="https://gist.github.com/Myndex/b21c2621072b93d3a7c1ef8939bc2adb"><strong>COLORSPACES - The Primal Frontier</strong></a> A brief Look at the math that helps model how we see. </li>
+    <li><a href="https://gist.github.com/Myndex/db30607d4fe697de9e582544335bbce6#how-many-colors-in-a-bushel"><strong>How Many Colors in a Bushel?</strong></a> Just &quot;how many&quot; colors are there? Is that even an answerable question? </li>
+    </ul>
+    <hr>
+    <h2 id="related-repos">Related Repos</h2>
+    <ul>
+    <li><a href="https://github.com/Myndex/SAPC-APCA"><strong>SAPC-APCA</strong></a> The main repository for the research and development of the new contrast method and algorithm being developed for the W3/AGWG accessibility guidelines, and for other standards and applications. This is the primary source for all things related to SAPC and APCA.</li>
+    <li><a href="https://github.com/Myndex/apca-w3"><strong>APCA W3</strong></a> This is the specific version of the APCA licensed to the W3 for the use in web accessibility guidelines such as the WCAG_3 guidelines.</li>
+    <li><a href="https://github.com/Myndex/bridge-pca"><strong>Bridge PCA</strong></a> BPCA is designed as a drop-in replacement for WCAG_2 contrast that is backwards compatible, but using APCA technology, to &quot;bridge&quot; toward the future of readability contrast.</li>
+    <li><a href="https://github.com/Myndex/fancyfontflipping/blob/master/README.md#fancy-font-flipping"><strong>Fancy Font Flipping</strong></a> Fancy Font Flipping is a demo I first put up in CodePen to illustrate the issues with flipping the text color from black to white based on a given estimated background luminance.</li>
+    <li><a href="https://github.com/Myndex/colorparsley"><strong>Color Parsley</strong></a> lightweight and versatile color parsing functions.</li>
+    </ul>
+
+    </details>
+    
+  </section>
+
+ </div>  <!-- ********    Close Guidlines Section     ********    -->
+    </details>
+
+  </section>
+
+  </div> <!--  Close explainers  -->
+
+
+  <div class="betanotice ml25 mr25 pa15 fs09 bsi20" style="border-radius: 18px 18px 0 0">
+
+  <h2 class="h1Query">APCA W3 is in public beta</h2>
+  <h3>We'd love to hear your comments, questions, or concerns—come visit our <a href="https://github.com/Myndex/SAPC-APCA/tree/master/documentation">GitHub repo</a> and let us know in the <a href="https://github.com/Myndex/SAPC-APCA/discussions">discussions forum </a>.</h3>
+ </div>  <!--  Close beta   -->
+
+  <div class="gammaContainer">
+  <details class="innerwrapper">
+    <summary>
+      <span class="twistUp"> <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewbox="0 0 24 24" width="36px" fill="none"> <path d="M0 0h24v24H0V0z" fill="none"/> <path d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 13l-4-4h8z" stroke="#ddeeff" fill="#ffffff"/> </svg>
+      </span>  
+  
+      <h2 class=" tal ml25 cW">Monitor gamma check</h2>
+    </summary>
+
+
+
+      <div class=" centered gamma " style="">
+        sRGB gamma target. Ideally the targets appear uniform (i.e. the
+        thick border looks the same as the inner grid). It is important that
+        the image be at 100% and not scaled - make sure your browser says
+        "actual size".<br/>
+
+        <p>These gamma targets require a 2:1 retina display.</p>
+
+        <fieldset>
+          <div id="gammaBoxDith96" class="gammaBox">
+            <span class="gammaLabel cGrE">Target #96 (2.6)</span>
+          </div>
+
+          <div id="gammaBoxDithC3" class="gammaBox">
+            <span class="gammaLabel cGr7">Target #c3 (2.6)</span>
+          </div>
+
+          <div id="gammaBoxDithE4" class="gammaBox">
+            <span class="gammaLabel cGr9">Target #e4 (2.6)</span>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div id="gammaBoxDith93" class="gammaBox">
+            <span class="gammaLabel cGrE">Target #93 (2.5)</span>
+          </div>
+
+          <div id="gammaBoxDithC1" class="gammaBox">
+            <span class="gammaLabel cGr7">Target #c1 (2.5)</span>
+          </div>
+
+          <div id="gammaBoxDithE3" class="gammaBox">
+            <span class="gammaLabel cGr9">Target #e3 (2.5)</span>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div id="gammaBoxDith8F" class="gammaBox">
+            <span class="gammaLabel cGrE">Target #8f (2.4)</span>
+          </div>
+
+          <div id="gammaBoxDithBF" class="gammaBox">
+            <span class="gammaLabel cGr7">Target #BF (2.4)</span>
+          </div>
+
+          <div id="gammaBoxDithE2" class="gammaBox">
+            <span class="gammaLabel cGr9">Target #e2 (2.4)</span>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div id="gammaBoxDith88" class="gammaBox">
+            <span class="gammaLabel cGrE">Target #88 (2.2)</span>
+          </div>
+
+          <div id="gammaBoxDithBA" class="gammaBox">
+            <span class="gammaLabel cGr7">Target #ba (2.2)</span>
+          </div>
+
+          <div id="gammaBoxDithE0" class="gammaBox">
+            <span class="gammaLabel cGr9">Target #e0 (2.2)</span>
+          </div>
+        </fieldset>
+      </div>
+    </details>
+ </div>  <!--  Close gamma   -->
+
+
+</main>  <!--  Close main wrapper   -->
+
+<footer class="fs07">
+
+  <div class="innerwrapper">
+
+    <div><img class="flr" width="60" src="/images/myndexeyesolidsquare.png">
+      This project is part of the <a href="https://readtech.org/ARC" aria-label="IRT Readability Criterion">IRT Readability Criterion.</a>
+      <br>
+      <b>The APCA algorithm as used on this page is available for free use with web content.</b>
+      <br>
+      Public license information at the  <a href="https://github.com/Myndex/apca-w3/">APCA-W3 GitHub Repository.</a>
+    </div>
+
+    <div class="copyright">All other aspects of this page are 
+      Copyright &copy; 2019 – 2025 <br>by MTI. All Rights Reserved. • Server.07 • <a rel="me" href="https://mastodon.social/@readtech">IRT</a> • <a rel="me" href="https://techhub.social/@Myndex">Mastodon</a>
+      <br>
+      <i>"Myndex" and the Myndex Eye Logo are trademarks of Myndex Technologies.</i>
+    </div>
+
+<span style="font-size: 75%;">MTIUnique: <b>0503400 </b>TPH:   <b>2622125 </b> And some of the nifty stuff you share with every site you visit:<br>Your IP Address: <b>207.241.231.144</b> &nbsp; &nbsp;  Port: 56799 &nbsp; &nbsp; Host:  &nbsp; &nbsp;  User:  &nbsp; &nbsp; URI: /APCA/ &nbsp; &nbsp; Ref: https://flo.uri.sh/visualisation/22018051/embed?auto=1 Agent: Mozilla/5.0 (compatible; archive.org_bot +http://archive.org/details/archive.org_bot) Zeno/b22f521 warc/v0.8.71</span>
+  </div>  <!-- close footer innerwrapper -->
+
+</footer>
+
+
+</body>
+
+
+<!-- JS For Tool -->
+<!-- JS For Tool -->
+<!-- JS For Tool -->
+
+
+
+<!-- JS For Tool -->
+<!-- JS For Tool -->
+<!-- JS For Tool -->
+
+
+
+<!-- JS For Tool -->
+<!-- JS For Tool -->
+<!-- JS For Tool -->
+
+
+<script>
+
+////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+/////////  POST FOOTER FUNCTIONS  \///////////////////////////////////////////
+////////                           \/////////////////////////////////////////
+///////                             \///////////////////////////////////////
+
+
+///// James's IRO sliders /////
+
+var sliderPickerTXT = new iro.ColorPicker("#TXTsliders", {
+  width: 370,
+  color: "rgb(255, 0, 0, 1)",
+  borderWidth: 1,
+  borderColor: "#ddd6ccff",
+  layout: [
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'hue'
+      }
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'saturation'
+      }
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'value'
+      }
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'alpha'
+      }
+    },
+  ]
+});
+
+var sliderPicker = new iro.ColorPicker("#BGsliders", {
+  width: 370,
+  color: "rgb(255, 0, 0)",
+  borderWidth: 1,
+  borderColor: "#ddd6cc",
+  layout: [
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'hue',sliderSize: 42,
+      }
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'saturation',sliderSize: 42,
+      }
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'value',sliderSize: 42,
+      }
+    },
+  ]
+});
+
+// listen to a color picker's color:change event
+// color:change callbacks receive the current color
+sliderPickerTXT.on('input:change', function(colorTX) {
+
+  if (colorTX.alpha < 1.0 && colorTX.alpha != 0.0) {
+  getCSScolor(colorTX.hex8String,'TXT');
+  inputTXT.value = colorTX.hex8String;
+  } else if (colorTX.alpha == 0.0) {
+  inputTXT.value = colorTX.hex8String; 
+  } else {
+   getCSScolor(colorTX.hexString,'TXT');
+  inputTXT.value = colorTX.hexString; 
+  }
+  
+  testContrast();
+});
+
+// listen to a color picker's color:change event
+// color:change callbacks receive the current color
+sliderPicker.on('input:change', function(color) {
+
+  getCSScolor(color.hexString,'BG');
+  inputBG.value = color.hexString;
+  testContrast();
+});
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/////////  CONFORMANCE SCORING CONSTANTS AND ARRAYS  \//////////////////////////
+////////                                              \/////////////////////////
+///////                                                \////////////////////////
+
+
+const weightArray = [0,100,200,300,400,500,600,700,800,900];
+const weightArrayLen = weightArray.length;
+
+
+ //////////////////////////////////////////////////////////////////////////
+/////  FONT TABLE DIALOGS  \//////////////////////////////////////////////
+
+
+const scoreColor = ['c00','b60','9a7900','08a','008d00','a0e'];
+
+const normalColspan = ''; // colspan="1"
+const simpleColspan = 'colspan="2"';
+const mobileColspan = 'colspan="2"';
+
+let mode = 'simple'; // 'normal' 'simple' 'mobile'
+let bodyText = document.getElementById('bodyText'); // only score 4 used
+let modeColspan = normalColspan;
+
+if (mode === 'simple') { bodyText.style = 'height: 120px; max-height: 120px;'; }
+
+const scoreTextArray = ['<span class="fs25">&#x1F6AB</span>',
+          'SCORE<br><span class="fs20 fw7">1</span>',
+          'SCORE<br><span class="fs20 fw7">2</span>',
+          'SCORE<br><span class="fs20 fw7">3</span>',
+          'SCORE<br><span class="fs14 fw5">4</span>',
+          '<span class="dib fs13 fw5" style="font-family: \'Barlow Condensed\';">PREFERRED<br>(5)</span>',
+          '<span class="">SCORE</span>',];
+
+const scoreTextArraySimple = ['<span class="fs35">&#x1F6AB</span>',
+              '<span class="fs35 fw6">1</span>',
+              '<span class="fs35 fw6">2</span>',
+              '<span class="fs35 fw6">3</span>',
+              '<span class="fs14 fw5">BODY<br>TEXT</span>',
+              '<span class="fs14 fw6">PREF</span>',
+              '<span class="fs12">LEVEL</span>',];
+
+const scoreTextArrayMobile = ['<span class="fs20">&#x1F6AB</span>',
+              '<span class="fs20 fw7">1</span>',
+              '<span class="fs20 fw7">2</span>',
+              '<span class="fs20 fw7">3</span>',
+              '<span class="fs20 fw7">BODY</span>',
+              '<span class="dib fs11 fw5" style="font-family: \'Barlow Condensed\';">PREF</span>',
+              '<span class="fs08 fw05">SCORE</span>',];
+    // deprecate
+
+const scoreTextProhibit = '<th><span class="fs20">&#x1F6AB</span></th>';
+
+const error9x1 = '<td colspan="9" class="underWeightAll" style="color: #a00; background-color: #fea; padding: 12px 48px; max-height: 125px; max-width:924px; width:924px; vertical-align: top;">';
+
+let loConMessage2Low = '<span class="dib mt01 fs09 p01 cR pbgR br05">&nbsp; &#9785; &#x1F6AB; Contrast Too Low for All &#x1F6AB; &#9785; &nbsp; </span>';
+
+let loConMessage2LowSingle = ' class="por mnw100 mnh100 fs35 lh07 cR lbgO br12x" style="text-align:center;padding:0.5em 0;"> &#x1F6AB; </td>';
+
+let loConMessage2LowRow = '<span class="dib p02 cR pbgP br05" style="margin 0; padding:6px; ">&nbsp;&#9785; &#x1F6AB; <span class="dib por pob02 fs07 lh05">Contrast Too Low for This Score Level</span> &#x1F6AB; &#9785;&nbsp; </span>';
+
+let loConMessage2LowSimple = '<div class="dib por" style="margin 0; padding:0; position:relative; height: 120px; max-height: 120px;">'
+   + '<span class="dib m00 cR pbgP br05" style="margin 0; padding:8px;"> &#x1F6AB;'
+   + '<span class="dib m01 por fs08 lh11">Contrast<br>Too Low</span> &#x1F6AB;</span> '
+   + '<div class="dib por fs14 fw1 m00 lh06" style="margin:0; padding:4px; font-family: Montserrat,Barlow; letter-spacing:-0.16em;">&nbsp;&nbsp;&nbsp;&nbsp;'
+   + '|||||<span class="fw2 ls-14">||||</span><span class="fw3 ls-11">|||</span><span class="fw4 ls-07">||</span><span class="fw5 ls-03">|</span><span class="fw7 ls03">|</span><span class="fw9 ls03">|</span><span class="ampSampSmall">&amp; </span><span class="fw9 ls03">|</span><span class="fw7 ls-03">|</span><span class="fw5 ls-07">|</span><span class="fw4 ls-09">||</span><span class="fw3 ls-11">|||</span><span class="fw2 ls-14">||||</span>|||||'
+   + '</div></div>' ;
+
+
+let loConWarningRow9x1 =
+    '<td colspan="9" class="underWeight" style="background-color: #a04;">'
+            + loConMessage2LowRow + '</td>';
+
+function loConWarningRow8x1 () {
+    return '<td colspan="8" class="fs22" style="color: '
+            + 'var(--textColor);background-color: var(--bgColor);">'
+            + loConMessage2LowSimple + '</td>';
+}
+
+function loConWarningRow9x1s () {
+    return '<td colspan="9" class="fs22" style="margin 0; padding: 12px 48px; '
+            + 'max-width:919.5px; width:919.5px; color: '
+            + 'var(--textColor);background-color: var(--bgColor);">'
+            + loConMessage2LowSimple + '</td>';
+}
+
+let loConWarningRow6x1 =
+            '<td colspan="6" class="underWeight" style="background-color: #a04;">'
+            + loConMessage2LowRow + '</td>';
+
+
+/////  MINIMUMS ARRAYS  ///////////////////////////////////////////////////
+// Updated Apr 12 2022
+
+    // Minimum font size per score level and weight
+    // Weight S 1 2 3 4 5 6 7 8 9
+const fontMatrixGmin = [
+    ['sc0',32,16,12,10,9,8,8,10,12,],  // score: hard fail level
+    ['sc1',36,16,12,10,10,10,10,12,14,], // score 1
+    ['sc2',36,16,12,10,10,10,10,16,18,], // score 2
+    ['sc3',36,16,12,11,11,11,11,16,18,], // score 3
+    ['sc4',42,24,18,14,14,14,14,16,18,], // score 4
+    ['sc5',48,28,24,20,18,16,15,16,18,], // score 5
+  ];
+    // Minimum font size per use case and score level
+    // Score M 1 2 3 4 5
+const fontSizeGtype = [
+    ['maxBody',32,32,32,32,32,],    // MAX body text (not zoomed)
+    ['minBody',12,12,14,16,24,],    // Min body text 
+    ['maxContent',140,120,108,96,72,], // MAX content text
+    ['minContent',10,11,12,14,18,],   // Min content text
+    ['maxAny',144,120,120,108,96,],    // MAX anytext
+    ['minAny',8,10,11,12,14,],      // Min anytext (copyright etc)
+  ];
+  
+    // Contrast minimums per master level and score level
+    // score M 1 2 3 4 5
+const fontScoreGmin = [             // CONTRAST LEVELS
+    [90,115,99,94,90,85,],          // 0 MAX Large Headlines (> 48px & 500)
+    [75,68.4,71.8,73.4,74.8,90.0,], // 1 Min Cols of Body Text (manually set)
+    [60,47.4,52.8,56.4,59.8,75.0,], // 2 Min Content Text 
+    [45,33.4,34.8,37.4,44.8,55.0,], // 3 Min Large content text
+    [30,22.0,24.0,27.0,29.8,45.0,], // 4 Min Any text, large icons (manual)
+    [15,14.0,15.0,16.0,18.0,22.0,], // 5 Min for all (manually set)
+  ];
+
+const minScoreG = fontScoreGmin[5][1]; // Hard minimum contrast, all levels.
+const nonTextScoreG = fontScoreGmin[4][4];
+
+let scoreLevel = 0;
+
+let scoreIndex = 4; //[0,1,2,3,4,5]; // holds score position
+
+
+///////\                                                        ////////////////
+////////\                                                      /////////////////
+/////////\  END CONFORMANCE SCORING CONSTANTS AND ARRAYS END  //////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+/////////  DOM ACCESS VARIABLES  \//////////////////////////////////////////////
+////////                          \/////////////////////////////////////////////
+
+// Performance Improving Variables for DOM access //
+
+let inputBG = document.getElementById('inputBG'),
+    BGpicker = document.getElementById('BGpicker'),
+    BGpickerWrap = document.getElementById('BGpickerWrap'),
+    BGvalidText = document.getElementById('BGvalidText');
+
+let inputTXT = document.getElementById('inputTXT'),
+    TXTpicker = document.getElementById('TXTpicker'),
+    TXTpickerWrap = document.getElementById('TXTpickerWrap'),
+    TXTvalidText = document.getElementById('TXTvalidText');
+
+let tableSamples = document.getElementById('tableSamples');
+let ampSamp3 = document.getElementById('ampSamp3');
+
+let contrastResultTable = document.getElementById('contrastResultTable');
+let buttonSpecial = document.getElementById('buttonSpecial');
+
+let tableScoreDOMarray = [  document.getElementById('nonText'),
+                            document.getElementById('spotText'),
+                            document.getElementById('softText'),
+                            document.getElementById('fluentText'),
+                            document.getElementById('bodyText'),
+                            'null', ];
+
+let tsi = tableScoreDOMlen = tableScoreDOMarray.length;
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/////////  TEST CONTRAST FUNCTION  \////////////////////////////////////////////
+////////                            \///////////////////////////////////////////
+///////                              \//////////////////////////////////////////
+
+
+function testContrast(midAdjust=false) {
+
+      // IF A
+  if (TXT[4] && BG[4]) { // Checks the TXT abd BG are entered ok
+
+    let fontArray = fontLookupAPCA(calcAPCA(TXT,BG));
+  
+    //  let contrastFixed = isNaN(contrast) ? contrast : contrast.toFixed(1);
+    let contrastFixed = contrast = fontArray[0];
+    let absContrast = isNaN(contrast) ? 0 : Math.abs(parseFloat(contrast));
+
+///// Display Contrast Value /////
+    contrastResultTable.innerHTML = "L<sup>c</sup>  " + contrastFixed;
+
+///// Prepare Row Strings /////
+
+    let rowString = '';
+    let currentLevel = 0;
+    let tempAlertColor = '#F00';
+    let modeWeightArrayLen = fontArray.length;
+
+    let sampleText = 'Fluent Text Sample',
+        minimumText = 'MINIMUM',
+        sampleBodyText = 
+     'The lazy grey dog slept in the <br>'
+    +'afternoon sun, but the frisky fox <br>'
+    +'frolicked freely in the field of <br>'
+    +'flowers without a care in the world. <br>'
+    +'The fox saw the slumbering dog and <br>'
+    +'tried to wake him, but the dog was<br>'
+    +'sound asleep, dreaming of chasing <br>'
+    +'birds through the lush green forest. <br>'
+    +'The fox wondered if the dog would <br>'
+    +'ever wake up so they could play, so...';
+
+
+    let fontLevel30 = 30, fontLevel46 = 46, fontLevel54 = 54, fontLevel96 = 96;
+    let minScoreG = 15.0;
+
+
+        // IF B
+    if (absContrast < minScoreG) {
+
+    /////  FOR "ALL UNDER MINIMUM" MESSAGE  /////
+    
+          // IF C
+      if (mode === 'simple') {
+          tableScoreDOMarray[4].innerHTML =
+          '<th>'
+          + scoreTextArray[0] + '</th>'
+          + loConWarningRow9x1s();
+      } else if (mode === 'mobile') {
+          tableScoreDOMarray[4].innerHTML = '<th>'
+          + scoreTextArray[0] + '</th>'
+          + loConWarningRow6x1;
+      } // END IF C
+
+    } else {  ///// fill font table  /////
+
+      let tempFont = 777;
+      let w = 2;
+      let nonTextBorder = '';
+
+
+///////////////////////////////////////////////////////////////////////////
+/////////  Populate Table and Samples   \/////////////////////////////////
+////////                                 \///////////////////////////////
+
+
+      s = 4; // score 4
+      
+          // IF D
+      if (mode === 'simple') {
+
+        w = 2; // weight 200
+
+        modeWeightArrayLen = 8;
+            // IF E 
+        if (absContrast > 89.7) {
+          rowString = '<th style="background-color: #77ffee;" >SMALL<br>BODY<br>TEXT<br>ONLY</th>';
+        } else if (absContrast > 74.7) {
+          rowString = '<th style="background-color: #88ffcc;" >BODY<br>TEXT<br>OKAY</th>';
+        } else if (absContrast > 59.7) {
+          rowString = '<th style="background-color: #bbffaa;" >FLUENT<br>TEXT<br>OKAY</th>';
+        } else if (absContrast > 44.7) {
+          rowString = '<th style="background-color: #eeff44;" >LARGE<br>& SUB-<br>FLUENT<br>TEXT</th>';
+        } else if (absContrast > 29.7) {
+          rowString = '<th style="background-color: #ffcc66;" >SPOT<br>& NON<br>TEXT<br>ONLY</th>';
+        } else if (absContrast > 14.7) {
+          rowString = '<th style="background-color: #ff8888;" >🚫<br>NO<br>TEXT<br>USAGE</th>';
+        } else {
+          rowString = '<th style="background-color: #aa0000;color:#fff;" >INVISIBLE</th>';
+        } // END IF E
+
+      } else if (mode === 'mobile') {
+
+        w = 2;
+        modeWeightArrayLen = 8;
+        rowString = '<th '+ normalColspan +' >' + scoreTextArray[s] + '</th>';
+      } //  END IF D
+
+           // column FOR
+      for (; w < modeWeightArrayLen; w++) {
+
+        tempFont = fontArray[w];
+
+            // IF F
+        if (mode === 'simple' && (w == 2 || w == 5 || w == 6)) {
+          modeColspan = normalColspan;
+          fontLevel96 = 96;  //82
+          fontLevel54 = 76;  //69
+          fontLevel46 = 58;  //30
+          fontLevel30 = 36;  //28
+          sampleText = 'SampleText';
+          minimumText = 'MIN';
+        } else if (mode === 'simple') { 
+          modeColspan = simpleColspan;
+          fontLevel96 = 120;
+          fontLevel54 = 99;
+          fontLevel46 = 74;
+          fontLevel30 = 40;
+          sampleText = 'Sample Text &amp; ATOMsizedgap';
+          minimumText = 'MINIMUM SIZE'; //'NO CONTENT TEXT<br> At This Size';
+        } else if (mode === 'mobile') { 
+          modeColspan = mobileColspan;
+        } else { 
+          modeColspan = normalColspan;
+        }  // END IF F
+
+        nonTextBorder = (contrast < 0) ? 'box-shadow: 0 0 3px 1px #123;' : '';
+
+      ///// BUILD ROWSTRING /////
+
+      //  LowCon error
+        (tempFont > 800 ) ?
+              rowString += '<td '+ modeColspan + loConMessage2LowSingle :
+
+      // Non Text
+         ( (nonTextScoreG > absContrast || tempFont > 700) && (w == 2 || w == 5 || w == 6) ) ?
+            rowString += '<td class="samp NT" style="font-weight: '+ weightArray[w]
+              + '; border-width:'+ (w * 2) +'px;' + nonTextBorder + '">N</td>' :
+
+      // Non Text
+          (nonTextScoreG > absContrast || tempFont > 700) ?
+            rowString += '<td '+ modeColspan +' class="samp NTwide" '
+              + 'style="font-weight: ' + weightArray[w] 
+              + '; border-width:'+ (w * 2) +'px; ' + nonTextBorder + '">|N|</td>' :
+
+      // score colored inset
+          (tempFont > fontLevel96) ?
+            rowString += '<td '+ modeColspan + ' class="samp" style="font-size:'
+              + tempFont + 'px; font-weight:'
+              + weightArray[w] + ';">&amp;'
+              + '<div>' + tempFont + 'px</div></td>' :
+
+      // fs only when over 54
+          (tempFont > fontLevel54) ?  
+            rowString += '<td '+ modeColspan +' class="samp" style="font-size:' 
+              + tempFont + 'px; font-weight:' 
+              + weightArray[w] + ';">' 
+              + tempFont + '</td>' :
+
+      // fspx only when over 46
+          (tempFont > fontLevel46) ?  
+            rowString += '<td '+ modeColspan +' class="samp" style="font-size:' 
+              + tempFont + 'px; font-weight:' 
+              + weightArray[w] + ';">'
+              + tempFont + 'px</td>' :
+
+      // Sample Text when over 30
+          (tempFont > fontLevel30) ?
+            rowString += '<td '+ modeColspan +' class="samp" style="font-size:' 
+              + tempFont + 'px; font-weight:' 
+              + weightArray[w] + ';">'
+              + tempFont + 'px<br>'+sampleText+'</td>' :
+          
+      // Sample Text Body Sample
+            rowString += '<td '+ modeColspan +' class="samp" style="font-size:' 
+              + tempFont + 'px; font-weight:' 
+              + weightArray[w] + '; line-height:' + (1.0 + w * 0.0456).toString() 
+              + ';">'
+              // + (2.2 - tempFont * 0.04) + ';">'
+              + tempFont + 'px<br>'+sampleBodyText+'</td>';
+
+      } // end column for
+
+      tableScoreDOMarray[s].innerHTML = rowString;
+
+    } // END IF B
+
+  } else {   /// !(BG.ok && TXT.ok)  for bad input colors ///
+
+    contrast = 0;
+    contrastResultTable.innerHTML = '<span class="cR">ERROR</span>';
+
+    tableScoreDOMarray[4].innerHTML = scoreTextProhibit + error9x1 + "Color Entry Error";
+
+  } // END IF A
+
+} // close testContrast()
+
+
+////////\                                    ///////////////////////////////////
+/////////\  END TEST CONTRAST FUNCTION END  ////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+</script>
+
+</html>
