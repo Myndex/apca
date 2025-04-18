@@ -635,23 +635,3 @@ const fontDeltaAscend = [
 
 
 }
-/*
-     FILE ARCHIVED ON 15:27:43 Mar 16, 2025 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 01:19:26 Apr 17, 2025.
-     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
-
-     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-     SECTION 108(a)(3)).
-*/
-/*
-playback timings (ms):
-  captures_list: 0.642
-  exclusion.robots: 0.033
-  exclusion.robots.policy: 0.018
-  esindex: 0.012
-  cdx.remote: 36.355
-  LoadShardBlock: 178.996 (3)
-  PetaboxLoader3.datanode: 229.991 (5)
-  PetaboxLoader3.resolve: 264.662 (3)
-  load_resource: 371.291 (2)
-*/

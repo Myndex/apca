@@ -392,23 +392,3 @@ function colorToRGB (rgba = [0,0,0,''], round = true) {
 
 
 }
-/*
-     FILE ARCHIVED ON 15:27:42 Mar 16, 2025 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 01:19:25 Apr 17, 2025.
-     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
-
-     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-     SECTION 108(a)(3)).
-*/
-/*
-playback timings (ms):
-  captures_list: 0.513
-  exclusion.robots: 0.016
-  exclusion.robots.policy: 0.007
-  esindex: 0.013
-  cdx.remote: 22.47
-  LoadShardBlock: 84.008 (3)
-  PetaboxLoader3.datanode: 142.487 (5)
-  load_resource: 353.258 (2)
-  PetaboxLoader3.resolve: 230.052 (2)
-*/
